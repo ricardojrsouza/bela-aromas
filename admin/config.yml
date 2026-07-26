@@ -9,23 +9,26 @@ public_folder: "img"
 collections:
   - name: "products"
     label: "Catálogo de Produtos"
-    file: "data/products.json"
-    fields:
-      - label: "Produtos"
-        name: "products"
-        widget: "list"
-        summary: "{{fields.name}} — R$ {{fields.price}}"
+    files:
+      - name: "productList"
+        label: "Lista de Produtos"
+        file: "data/products.json"
         fields:
-          - { label: "ID (não repetir número já usado)", name: "id", widget: "number", value_type: "int" }
-          - { label: "Nome do produto", name: "name", widget: "string" }
-          - label: "Categoria"
-            name: "category"
-            widget: "select"
-            options:
-              - { label: "Velas Santas", value: "velas-santas" }
-              - { label: "Decorativas", value: "decorativas" }
-          - { label: "Categoria (texto exibido no card)", name: "categoryLabel", widget: "string" }
-          - { label: "Selo (ex: Mais Vendida, Novidade)", name: "tag", widget: "string", required: false }
-          - { label: "Descrição", name: "description", widget: "text" }
-          - { label: "Preço (R$)", name: "price", widget: "number", value_type: "float" }
-          - { label: "Foto do produto", name: "image", widget: "image" }
+          - label: "Produtos"
+            name: "products"
+            widget: "list"
+            summary: "{{fields.name}} — R$ {{fields.price}}"
+            fields:
+              - { label: "ID (não repetir número já usado)", name: "id", widget: "number", value_type: "int" }
+              - { label: "Nome do produto", name: "name", widget: "string" }
+              - label: "Categoria"
+                name: "category"
+                widget: "select"
+                options:
+                  - { label: "Velas Santas", value: "velas-santas" }
+                  - { label: "Decorativas", value: "decorativas" }
+              - { label: "Categoria (texto exibido no card)", name: "categoryLabel", widget: "string" }
+              - { label: "Selo (ex: Mais Vendida, Novidade)", name: "tag", widget: "string", required: false }
+              - { label: "Descrição", name: "description", widget: "text" }
+              - { label: "Preço (R$)", name: "price", widget: "number", value_type: "float" }
+              - { label: "Foto do produto", name: "image", widget: "image" }
