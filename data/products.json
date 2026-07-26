@@ -79,6 +79,16 @@
       "description": "Versão mini da nossa vela de Nossa Senhora — menor que a Vela Nossa Senhora Aparecida tradicional, ideal para um altar pequeno, para levar consigo ou presentear com delicadeza. Feita à mão, com todo o carinho de sempre em um tamanho compacto.",
       "price": 5,
       "image": "img/vela-nossa-senhora-mini.jpeg"
+    },
+    {
+      "id": 10,
+      "name": "Kit 5 Velas Margaridas",
+      "category": "decorativas",
+      "tag": "Novidade",
+      "categoryLabel": "Decorativa",
+      "description": "Inspirada na delicadeza das margaridas, este kit transmite leveza, beleza e aconchego, tornando qualquer ambiente ainda mais especial.",
+      "image": "img/whatsapp-image-2026-07-26-at-20.06.07.jpeg",
+      "price": 12
     }
   ]
 }
