@@ -31,16 +31,6 @@
       "image": "img/vela-rosa.jpeg"
     },
     {
-      "id": 4,
-      "name": "Vela Margarida",
-      "category": "decorativas",
-      "categoryLabel": "Decorativas",
-      "tag": "Delicada",
-      "description": "Inspirada na delicadeza das margaridas, esta vela transmite leveza, beleza e aconchego, tornando qualquer ambiente ainda mais especial.",
-      "price": 4,
-      "image": "img/vela-margarida.jpeg"
-    },
-    {
       "id": 5,
       "name": "Vela Flor de Cerejeira",
       "category": "decorativas",
