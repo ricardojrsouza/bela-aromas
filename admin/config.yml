@@ -1,6 +1,8 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: ricardojrsouza/bela-aromas
   branch: main
+  base_url: https://bela-aromas.pages.dev
 
 locale: 'pt'
 
