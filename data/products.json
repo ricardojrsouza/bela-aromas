@@ -1,100 +1,105 @@
 {
   "products": [
     {
-      "id": 1,
+      "aromas": [],
+      "price": 10,
       "name": "Vela Nossa Senhora Aparecida",
-      "category": "velas-santas",
+      "colors": [
+        "Azul",
+        "Rosa",
+        "Branco",
+        "Verde"
+      ],
       "categoryLabel": "Velas Santas",
       "tag": "Mais Vendida",
-      "description": "Uma homenagem à Mãe do Brasil, esta vela ilumina seus momentos de oração e devoção, levando paz, esperança e bênçãos para o seu lar. Tamanho tradicional (maior que a versão Mini).",
-      "price": 10,
+      "id": 1,
       "image": "img/vela-aparecida.jpeg",
-      "colors": [],
-      "aromas": []
+      "description": "Uma homenagem à Mãe do Brasil, esta vela ilumina seus momentos de oração e devoção, levando paz, esperança e bênçãos para o seu lar. Tamanho tradicional (maior que a versão Mini).",
+      "category": "velas-santas"
     },
     {
-      "id": 2,
+      "aromas": [],
+      "price": 8,
       "name": "Vela Nossa Senhora de Guadalupe",
-      "category": "velas-santas",
+      "colors": [],
       "categoryLabel": "Velas Santas",
       "tag": "Devoção",
-      "description": "Uma vela que representa proteção, amor e fé. Que sua luz ilumine seu lar e fortaleça seu coração sob o olhar materno de Nossa Senhora de Guadalupe. *Não acompanha as rosas.",
-      "price": 8,
+      "id": 2,
       "image": "img/vela-guadalupe.jpeg",
-      "colors": [],
-      "aromas": []
+      "description": "Uma vela que representa proteção, amor e fé. Que sua luz ilumine seu lar e fortaleça seu coração sob o olhar materno de Nossa Senhora de Guadalupe. *Não acompanha as rosas.",
+      "category": "velas-santas"
     },
     {
-      "id": 3,
+      "aromas": [],
+      "price": 10,
       "name": "Vela Rosa",
-      "category": "decorativas",
+      "colors": [],
       "categoryLabel": "Decorativas",
       "tag": "Artesanal",
-      "description": "Delicada e atemporal, esta vela traz charme e elegância à decoração, criando um ambiente acolhedor e repleto de beleza.",
-      "price": 10,
+      "id": 3,
       "image": "img/vela-rosa.jpeg",
-      "colors": [],
-      "aromas": []
+      "description": "Delicada e atemporal, esta vela traz charme e elegância à decoração, criando um ambiente acolhedor e repleto de beleza.",
+      "category": "decorativas"
     },
     {
-      "id": 4,
+      "aromas": [],
+      "price": 4,
       "name": "Vela Margarida",
-      "category": "decorativas",
+      "colors": [],
       "categoryLabel": "Decorativas",
       "tag": "Delicada",
-      "description": "Inspirada na delicadeza das margaridas, esta vela transmite leveza, beleza e aconchego, tornando qualquer ambiente ainda mais especial.",
-      "price": 4,
+      "id": 4,
       "image": "img/vela-margarida.jpeg",
-      "colors": [],
-      "aromas": []
+      "description": "Inspirada na delicadeza das margaridas, esta vela transmite leveza, beleza e aconchego, tornando qualquer ambiente ainda mais especial.",
+      "category": "decorativas"
     },
     {
-      "id": 5,
+      "aromas": [],
+      "price": 4,
       "name": "Vela Flor de Cerejeira",
-      "category": "decorativas",
+      "colors": [],
       "categoryLabel": "Decorativas",
       "tag": "Delicada",
-      "description": "Inspirada na delicadeza da flor de cerejeira, esta vela transmite serenidade, elegância e renovação, perfumando e encantando qualquer ambiente.",
-      "price": 4,
+      "id": 5,
       "image": "img/vela-flor-cerejeira.jpeg",
-      "colors": [],
-      "aromas": []
+      "description": "Inspirada na delicadeza da flor de cerejeira, esta vela transmite serenidade, elegância e renovação, perfumando e encantando qualquer ambiente.",
+      "category": "decorativas"
     },
     {
-      "id": 6,
+      "aromas": [],
+      "price": 25,
       "name": "Vela Copo Margarida / Flor de Cerejeira",
-      "category": "decorativas",
+      "colors": [],
       "categoryLabel": "Decorativas",
       "tag": "Premium",
-      "description": "Delicada e encantadora, esta vela une a suavidade ao aconchego da luz, trazendo charme, leveza e um toque especial para qualquer ambiente.",
-      "price": 25,
+      "id": 6,
       "image": "img/vela-copo-margarida-cerejeira.jpeg",
-      "colors": [],
-      "aromas": []
+      "description": "Delicada e encantadora, esta vela une a suavidade ao aconchego da luz, trazendo charme, leveza e um toque especial para qualquer ambiente.",
+      "category": "decorativas"
     },
     {
-      "id": 7,
+      "aromas": [],
+      "price": 8,
       "name": "Vela Bubble",
-      "category": "decorativas",
+      "colors": [],
       "categoryLabel": "Decorativas",
       "tag": "Kit Presente",
-      "description": "Com seu design moderno e elegante, a Vela Bubble é perfeita para decorar e transformar qualquer ambiente, unindo beleza, aconchego e sofisticação em cada detalhe.",
-      "price": 8,
+      "id": 7,
       "image": "img/vela-bubble.jpeg",
-      "colors": [],
-      "aromas": []
+      "description": "Com seu design moderno e elegante, a Vela Bubble é perfeita para decorar e transformar qualquer ambiente, unindo beleza, aconchego e sofisticação em cada detalhe.",
+      "category": "decorativas"
     },
     {
-      "id": 8,
+      "aromas": [],
+      "price": 5,
       "name": "Vela Nossa Senhora Mini",
-      "category": "velas-santas",
+      "colors": [],
       "categoryLabel": "Velas Santas",
       "tag": "Tamanho Mini",
-      "description": "Versão mini da nossa vela de Nossa Senhora — menor que a Vela Nossa Senhora Aparecida tradicional, ideal para um altar pequeno, para levar consigo ou presentear com delicadeza. Feita à mão, com todo o carinho de sempre em um tamanho compacto.",
-      "price": 5,
+      "id": 8,
       "image": "img/vela-nossa-senhora-mini.jpeg",
-      "colors": [],
-      "aromas": []
+      "description": "Versão mini da nossa vela de Nossa Senhora — menor que a Vela Nossa Senhora Aparecida tradicional, ideal para um altar pequeno, para levar consigo ou presentear com delicadeza. Feita à mão, com todo o carinho de sempre em um tamanho compacto.",
+      "category": "velas-santas"
     }
   ]
 }
