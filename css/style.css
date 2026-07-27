@@ -714,6 +714,43 @@ ul { list-style: none; }
   flex: 1;
 }
 
+.variant-select {
+  margin-bottom: 10px;
+}
+
+.variant-select label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--brown-500);
+  margin-bottom: 4px;
+}
+
+.variant-select select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-soft);
+  background: var(--cream);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--brown-900);
+}
+
+.variant-select select:focus {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 1px;
+}
+
+.cart-item-variant {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--terracotta-dark);
+  margin: 2px 0;
+}
+
 .product-footer {
   display: flex;
   align-items: center;
