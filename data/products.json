@@ -18,7 +18,11 @@
       "category": "velas-santas"
     },
     {
-      "aromas": [],
+      "aromas": [
+        "Lavanda",
+        "baunilha",
+        "Eucalipto"
+      ],
       "price": 8,
       "name": "Vela Nossa Senhora de Guadalupe",
       "colors": [],
