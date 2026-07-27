@@ -12,9 +12,20 @@ const PIX_MERCHANT_CITY = "MARAVILHAS";        // sem acentos, máx. 15 caracter
 const CASH_ALLOWED_CITY = "maravilhas";        // cidade onde dinheiro é aceito (comparação sem acento/maiúsculas)
 
 /* ---------- Estado do carrinho (em memória + localStorage) ---------- */
+function cartItemKey(id, color, aroma) {
+  return `${id}::${color || ""}::${aroma || ""}`;
+}
+
 function getCart() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    return raw.map(item => ({
+      key: item.key || cartItemKey(item.id, item.color, item.aroma),
+      id: item.id,
+      qty: item.qty,
+      color: item.color || "",
+      aroma: item.aroma || ""
+    }));
   } catch {
     return [];
   }
@@ -25,37 +36,38 @@ function saveCart(cart) {
   updateCartCount();
 }
 
-function addToCart(productId) {
+function addToCart(productId, color, aroma) {
   const product = PRODUCTS.find(p => p.id === productId);
   if (!product) return;
 
+  const key = cartItemKey(productId, color, aroma);
   const cart = getCart();
-  const existing = cart.find(item => item.id === productId);
+  const existing = cart.find(item => item.key === key);
 
   if (existing) {
     existing.qty += 1;
   } else {
-    cart.push({ id: product.id, qty: 1 });
+    cart.push({ key, id: product.id, qty: 1, color: color || "", aroma: aroma || "" });
   }
 
   saveCart(cart);
   renderCartDrawer();
 }
 
-function updateQty(productId, delta) {
+function updateQty(key, delta) {
   const cart = getCart();
-  const item = cart.find(i => i.id === productId);
+  const item = cart.find(i => i.key === key);
   if (!item) return;
 
   item.qty += delta;
-  const newCart = item.qty <= 0 ? cart.filter(i => i.id !== productId) : cart;
+  const newCart = item.qty <= 0 ? cart.filter(i => i.key !== key) : cart;
 
   saveCart(newCart);
   renderCartDrawer();
 }
 
-function removeFromCart(productId) {
-  const cart = getCart().filter(i => i.id !== productId);
+function removeFromCart(key) {
+  const cart = getCart().filter(i => i.key !== key);
   saveCart(cart);
   renderCartDrawer();
 }
@@ -94,18 +106,23 @@ function renderCartDrawer() {
     itemsEl.innerHTML = cart.map(item => {
       const p = PRODUCTS.find(pr => pr.id === item.id);
       if (!p) return "";
+      const variantParts = [item.color, item.aroma].filter(Boolean);
+      const variantHtml = variantParts.length
+        ? `<span class="cart-item-variant">${variantParts.join(" · ")}</span>`
+        : "";
       return `
         <div class="cart-item">
           <img src="${p.image}" alt="${p.name}">
           <div class="cart-item-info">
             <h4>${p.name}</h4>
+            ${variantHtml}
             <span>${formatPrice(p.price)}</span>
             <div class="qty-control">
-              <button onclick="updateQty(${p.id}, -1)" aria-label="Diminuir quantidade">−</button>
+              <button onclick="updateQty('${item.key}', -1)" aria-label="Diminuir quantidade">−</button>
               <span>${item.qty}</span>
-              <button onclick="updateQty(${p.id}, 1)" aria-label="Aumentar quantidade">+</button>
+              <button onclick="updateQty('${item.key}', 1)" aria-label="Aumentar quantidade">+</button>
             </div>
-            <button class="remove-item" onclick="removeFromCart(${p.id})">Remover</button>
+            <button class="remove-item" onclick="removeFromCart('${item.key}')">Remover</button>
           </div>
         </div>
       `;
@@ -319,8 +336,10 @@ function renderCheckoutSummary() {
   summaryEl.innerHTML = cart.map(item => {
     const p = PRODUCTS.find(pr => pr.id === item.id);
     if (!p) return "";
+    const variantParts = [item.color, item.aroma].filter(Boolean);
+    const variantText = variantParts.length ? ` (${variantParts.join(", ")})` : "";
     return `<div class="checkout-summary-item">
-      <span>${item.qty}x ${p.name}</span>
+      <span>${item.qty}x ${p.name}${variantText}</span>
       <span>${formatPrice(p.price * item.qty)}</span>
     </div>`;
   }).join("");
@@ -335,7 +354,9 @@ function buildOrderMessage(customerName, payment, address, notes) {
   cart.forEach(item => {
     const p = PRODUCTS.find(pr => pr.id === item.id);
     if (!p) return;
-    msg += `• ${item.qty}x ${p.name} — ${formatPrice(p.price * item.qty)}\n`;
+    const variantParts = [item.color, item.aroma].filter(Boolean);
+    const variantText = variantParts.length ? ` (${variantParts.join(", ")})` : "";
+    msg += `• ${item.qty}x ${p.name}${variantText} — ${formatPrice(p.price * item.qty)}\n`;
   });
 
   msg += `\n*Total: ${formatPrice(cartTotalPrice())}*`;
@@ -439,7 +460,27 @@ function renderProducts(filter = "todas") {
     return;
   }
 
-  grid.innerHTML = filtered.map(p => `
+  grid.innerHTML = filtered.map(p => {
+    const hasColors = Array.isArray(p.colors) && p.colors.length > 0;
+    const hasAromas = Array.isArray(p.aromas) && p.aromas.length > 0;
+
+    const colorSelect = hasColors ? `
+      <div class="variant-select">
+        <label for="color-${p.id}">Cor</label>
+        <select id="color-${p.id}">
+          ${p.colors.map(c => `<option value="${c}">${c}</option>`).join("")}
+        </select>
+      </div>` : "";
+
+    const aromaSelect = hasAromas ? `
+      <div class="variant-select">
+        <label for="aroma-${p.id}">Aroma</label>
+        <select id="aroma-${p.id}">
+          ${p.aromas.map(a => `<option value="${a}">${a}</option>`).join("")}
+        </select>
+      </div>` : "";
+
+    return `
     <article class="product-card">
       <div class="product-media">
         <span class="product-tag">${p.tag}</span>
@@ -456,6 +497,8 @@ function renderProducts(filter = "todas") {
         <span class="product-category">${p.categoryLabel}</span>
         <h3>${p.name}</h3>
         <p>${p.description}</p>
+        ${colorSelect}
+        ${aromaSelect}
         <div class="product-footer">
           <span class="product-price">${formatPrice(p.price)}</span>
           <button class="add-btn" onclick="handleAddClick(${p.id}, this)">
@@ -464,11 +507,18 @@ function renderProducts(filter = "todas") {
         </div>
       </div>
     </article>
-  `).join("");
+  `;
+  }).join("");
 }
 
 function handleAddClick(productId, btn) {
-  addToCart(productId);
+  const colorSelect = document.getElementById(`color-${productId}`);
+  const aromaSelect = document.getElementById(`aroma-${productId}`);
+  const color = colorSelect ? colorSelect.value : "";
+  const aroma = aromaSelect ? aromaSelect.value : "";
+
+  addToCart(productId, color, aroma);
+
   const original = btn.textContent;
   btn.textContent = "Adicionado ✓";
   btn.classList.add("added");
