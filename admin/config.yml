@@ -34,3 +34,13 @@ collections:
               - { label: "Descrição", name: "description", widget: "text" }
               - { label: "Preço (R$)", name: "price", widget: "number", value_type: "float" }
               - { label: "Foto do produto", name: "image", widget: "image" }
+              - label: "Cores disponíveis (deixe vazio se não tiver opção de cor)"
+                name: "colors"
+                widget: "list"
+                required: false
+                hint: "Adicione uma cor por linha, ex: Branca, Azul, Rosa"
+              - label: "Aromas disponíveis (deixe vazio se não tiver opção de aroma)"
+                name: "aromas"
+                widget: "list"
+                required: false
+                hint: "Adicione um aroma por linha, ex: Lavanda, Baunilha"
