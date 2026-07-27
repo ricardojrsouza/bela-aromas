@@ -8,10 +8,13 @@
 <body>
   <!-- Login (Netlify Identity) -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <!-- Traduções (precisa vir ANTES do decap-cms.js) -->
+  <script src="https://unpkg.com/decap-cms-locales@^3.0.0/dist/decap-cms-locales.js"></script>
   <!-- Painel de edição (Decap CMS) -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script>
     if (window.netlifyIdentity) {
+      window.netlifyIdentity.init({ locale: 'pt' });
       window.netlifyIdentity.on("init", user => {
         if (!user) {
           window.netlifyIdentity.on("login", () => {
