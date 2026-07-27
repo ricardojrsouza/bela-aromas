@@ -1,7 +1,10 @@
 {
   "products": [
     {
-      "aromas": [],
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
       "price": 10,
       "name": "Vela Nossa Senhora Aparecida",
       "colors": [
@@ -23,7 +26,10 @@
       "category": "velas-santas"
     },
     {
-      "aromas": [],
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
       "price": 8,
       "name": "Vela Nossa Senhora de Guadalupe",
       "colors": [
@@ -45,7 +51,10 @@
       "category": "velas-santas"
     },
     {
-      "aromas": [],
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
       "price": 10,
       "name": "Vela Rosa",
       "colors": [
@@ -67,20 +76,13 @@
       "category": "decorativas"
     },
     {
-      "aromas": [],
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
       "price": 12,
       "name": "Kit 5 Velas Margarida",
-      "colors": [
-        "Azul",
-        "Verde",
-        "Amarelo",
-        "Lilás",
-        "Rosa",
-        "Dourado",
-        "Laranja",
-        "Branco",
-        "Vermelho"
-      ],
+      "colors": [],
       "categoryLabel": "Decorativas",
       "tag": "Delicada",
       "id": 4,
@@ -89,20 +91,13 @@
       "category": "decorativas"
     },
     {
-      "aromas": [],
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
       "price": 12,
       "name": "Kit 4 Velas Flor de Cerejeira",
-      "colors": [
-        "Azul",
-        "Verde",
-        "Amarelo",
-        "Lilás",
-        "Rosa",
-        "Dourado",
-        "Laranja",
-        "Branco",
-        "Vermelho"
-      ],
+      "colors": [],
       "categoryLabel": "Decorativas",
       "tag": "Delicada",
       "id": 5,
@@ -111,7 +106,10 @@
       "category": "decorativas"
     },
     {
-      "aromas": [],
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
       "price": 25,
       "name": "Vela Copo Margarida ",
       "colors": [
@@ -133,7 +131,10 @@
       "category": "decorativas"
     },
     {
-      "aromas": [],
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
       "price": 8,
       "name": "Vela Bubble",
       "colors": [
@@ -155,7 +156,10 @@
       "category": "decorativas"
     },
     {
-      "aromas": [],
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
       "price": 5,
       "name": "Vela Nossa Senhora Mini",
       "colors": [
@@ -177,7 +181,10 @@
       "category": "velas-santas"
     },
     {
-      "aromas": [],
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
       "price": 12,
       "name": "Vela cruz ",
       "colors": [
