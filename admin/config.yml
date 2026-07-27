@@ -2,6 +2,8 @@ backend:
   name: git-gateway
   branch: main
 
+locale: 'pt'
+
 # Onde as fotos enviadas pelo painel são salvas, e como o site as acessa
 media_folder: "img"
 public_folder: "img"
