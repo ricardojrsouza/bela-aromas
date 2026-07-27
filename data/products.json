@@ -198,12 +198,12 @@
       "category": "velas-santas"
     },
     {
-      "id": 10,
-      "name": "Vela Anjo Pequena ",
-      "category": "velas-santas",
-      "categoryLabel": "Velas santas",
+      "aromas": [
+        "OrquídeaNegra",
+        "Baunilha"
+      ],
       "price": 10,
-      "image": "img/3275775a-a93e-4a62-9b03-7a59ebbaec86.jpeg",
+      "name": "Vela Anjo Pequena ",
       "colors": [
         "Azul",
         "Verde",
@@ -215,7 +215,11 @@
         "Branco",
         "Vermelho"
       ],
-      "description": "Um pequeno anjo para iluminar, proteger e tornar cada momento ainda mais especial."
+      "categoryLabel": "Velas santas",
+      "id": 10,
+      "image": "img/3275775a-a93e-4a62-9b03-7a59ebbaec86.jpeg",
+      "description": "Um pequeno anjo para iluminar, proteger e tornar cada momento ainda mais especial.",
+      "category": "velas-santas"
     }
   ]
 }
