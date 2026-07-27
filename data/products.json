@@ -1,7 +1,9 @@
 {
   "products": [
     {
-      "aromas": [],
+      "aromas": [
+        "Lavanda"
+      ],
       "price": 10,
       "name": "Vela Nossa Senhora Aparecida",
       "colors": [
