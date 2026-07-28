@@ -31,7 +31,7 @@
         "Baunilha"
       ],
       "price": 8,
-      "name": "Vela Nossa Senhora de Guadalupe",
+      "name": "Vela Nossa Senhora de Guadalupe - Flores",
       "colors": [
         "Azul",
         "Verde",
@@ -127,7 +127,7 @@
       "tag": "Premium",
       "id": 6,
       "image": "img/vela-copo-margarida-cerejeira.jpeg",
-      "description": "Delicada e encantadora, esta vela une a suavidade ao aconchego da luz, trazendo charme, leveza e um toque especial para qualquer ambiente.",
+      "description": "Delicada e encantadora, esta vela une a suavidade ao aconchego da luz, trazendo charme, leveza e um toque especial para qualquer ambiente.\n",
       "category": "decorativas"
     },
     {
@@ -226,6 +226,129 @@
       "id": 10,
       "image": "img/3275775a-a93e-4a62-9b03-7a59ebbaec86.jpeg",
       "description": "Um pequeno anjo para iluminar, proteger e tornar cada momento ainda mais especial.",
+      "category": "velas-santas"
+    },
+    {
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
+      "price": 12,
+      "name": "Vela anjo ",
+      "colors": [
+        "Azul",
+        "Verde",
+        "Amarelo",
+        "Lilás",
+        "Rosa",
+        "Dourado",
+        "Laranja",
+        "Branco",
+        "Vermelho"
+      ],
+      "categoryLabel": "Velas Santas",
+      "id": 11,
+      "image": "img/83eddd24-d364-4f09-abdd-01507692d2f7.jpeg",
+      "description": "A delicadeza de um anjo transformada em vela para iluminar ambientes e aquecer corações.\n",
+      "category": "velas-santas"
+    },
+    {
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
+      "price": 10,
+      "name": "Vela Rosa Modelo 2",
+      "colors": [
+        "Azul",
+        "Verde",
+        "Amarelo",
+        "Lilás",
+        "Rosa",
+        "Dourado",
+        "Laranja",
+        "Branco",
+        "Vermelho"
+      ],
+      "categoryLabel": "Vela decorativa ",
+      "id": 12,
+      "image": "img/02dd4757-9dd1-4365-91ff-6a0b58f10081.jpeg",
+      "description": "Cada chama acesa é um convite para viver momentos de paz, aconchego e serenidade.\n",
+      "category": "decorativas"
+    },
+    {
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
+      "price": 25,
+      "name": "Vela Copo Rosa",
+      "colors": [
+        "Azul",
+        "Verde",
+        "Amarelo",
+        "Lilás",
+        "Rosa",
+        "Dourado",
+        "Laranja",
+        "Branco",
+        "Vermelho"
+      ],
+      "categoryLabel": "Decorativa ",
+      "tag": "Premium ",
+      "id": 13,
+      "image": "img/23dcea92-fc96-4dec-a6f9-6c85199b213f.jpeg",
+      "description": "Cada chama acesa é um convite para viver momentos de paz, aconchego e serenidade.\n",
+      "category": "decorativas"
+    },
+    {
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
+      "price": 25,
+      "name": "Vela Copo Flor de Cerejeira ",
+      "colors": [
+        "Azul",
+        "Verde",
+        "Amarelo",
+        "Lilás",
+        "Rosa",
+        "Dourado",
+        "Laranja",
+        "Branco",
+        "Vermelho"
+      ],
+      "categoryLabel": "Decorativas",
+      "tag": "Premium ",
+      "id": 14,
+      "image": "img/718fda91-2918-434a-950c-d4377ac7297c.jpeg",
+      "description": "Com a delicadeza da flor de cerejeira, esta vela perfuma e ilumina o ambiente, trazendo leveza, serenidade e um toque de elegância para o seu dia.",
+      "category": "decorativas"
+    },
+    {
+      "aromas": [
+        "Orquídea Negra",
+        "Baunilha"
+      ],
+      "price": 8,
+      "name": "Vela Nossa Senhora de Guadalupe - Coração ",
+      "colors": [
+        "Azul",
+        "Verde",
+        "Amarelo",
+        "Lilás",
+        "Rosa",
+        "Dourado",
+        "Laranja",
+        "Branco",
+        "Vermelho"
+      ],
+      "categoryLabel": "Velas Santas",
+      "tag": "Novidade ",
+      "id": 15,
+      "image": "img/img_0086.jpeg",
+      "description": "Sob a proteção de Nossa Senhora de Guadalupe, ela simboliza amor, acolhimento e esperança, tornando qualquer ocasião ainda mais especial.",
       "category": "velas-santas"
     }
   ]
