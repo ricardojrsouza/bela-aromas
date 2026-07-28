@@ -149,7 +149,7 @@
         "Vermelho"
       ],
       "categoryLabel": "Decorativas",
-      "tag": "Kit Presente",
+      "tag": "Moderna",
       "id": 7,
       "image": "img/vela-bubble.jpeg",
       "description": "Com seu design moderno e elegante, a Vela Bubble é perfeita para decorar e transformar qualquer ambiente, unindo beleza, aconchego e sofisticação em cada detalhe.",
@@ -199,6 +199,7 @@
         "Vermelho"
       ],
       "categoryLabel": "Velas santas",
+      "tag": "Devoção ",
       "id": 9,
       "image": "img/50f809e5-065d-478f-8530-f52153286e2b.jpeg",
       "description": "Um símbolo de proteção, bênçãos e fé, criado para iluminar momentos especiais e eternizar lembranças cheias de amor e devoção.",
@@ -223,6 +224,7 @@
         "Vermelho"
       ],
       "categoryLabel": "Velas santas",
+      "tag": "Devoção ",
       "id": 10,
       "image": "img/3275775a-a93e-4a62-9b03-7a59ebbaec86.jpeg",
       "description": "Um pequeno anjo para iluminar, proteger e tornar cada momento ainda mais especial.",
@@ -247,6 +249,7 @@
         "Vermelho"
       ],
       "categoryLabel": "Velas Santas",
+      "tag": "Devoção ",
       "id": 11,
       "image": "img/83eddd24-d364-4f09-abdd-01507692d2f7.jpeg",
       "description": "A delicadeza de um anjo transformada em vela para iluminar ambientes e aquecer corações.\n",
@@ -271,6 +274,7 @@
         "Vermelho"
       ],
       "categoryLabel": "Vela decorativa ",
+      "tag": "Delicada",
       "id": 12,
       "image": "img/02dd4757-9dd1-4365-91ff-6a0b58f10081.jpeg",
       "description": "Cada chama acesa é um convite para viver momentos de paz, aconchego e serenidade.\n",
@@ -345,7 +349,7 @@
         "Vermelho"
       ],
       "categoryLabel": "Velas Santas",
-      "tag": "Novidade ",
+      "tag": "Novidade",
       "id": 15,
       "image": "img/img_0086.jpeg",
       "description": "Sob a proteção de Nossa Senhora de Guadalupe, ela simboliza amor, acolhimento e esperança, tornando qualquer ocasião ainda mais especial.",
