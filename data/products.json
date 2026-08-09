@@ -21,9 +21,13 @@
       "categoryLabel": "Velas Santas",
       "tag": "Mais Vendida",
       "id": 1,
-      "image": "img/vela-aparecida.jpeg",
       "description": "Uma homenagem à Mãe do Brasil, esta vela ilumina seus momentos de oração e devoção, levando paz, esperança e bênçãos para o seu lar. Tamanho tradicional (maior que a versão Mini).",
-      "category": "velas-santas"
+      "category": "velas-santas",
+      "images": [
+        {
+          "src": "img/vela-aparecida.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -46,9 +50,13 @@
       "categoryLabel": "Velas Santas",
       "tag": "Devoção",
       "id": 2,
-      "image": "img/vela-guadalupe.jpeg",
       "description": "Uma vela que representa proteção, amor e fé. Que sua luz ilumine seu lar e fortaleça seu coração sob o olhar materno de Nossa Senhora de Guadalupe. *Não acompanha as rosas.",
-      "category": "velas-santas"
+      "category": "velas-santas",
+      "images": [
+        {
+          "src": "img/vela-guadalupe.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -71,9 +79,13 @@
       "categoryLabel": "Decorativas",
       "tag": "Artesanal",
       "id": 3,
-      "image": "img/vela-rosa.jpeg",
       "description": "Delicada e atemporal, esta vela traz charme e elegância à decoração, criando um ambiente acolhedor e repleto de beleza.",
-      "category": "decorativas"
+      "category": "decorativas",
+      "images": [
+        {
+          "src": "img/vela-rosa.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -86,9 +98,13 @@
       "categoryLabel": "Decorativas",
       "tag": "Delicada",
       "id": 4,
-      "image": "img/img_0138.jpeg",
       "description": "Inspirada na delicadeza das margaridas, esta vela transmite leveza, beleza e aconchego, tornando qualquer ambiente ainda mais especial.",
-      "category": "decorativas"
+      "category": "decorativas",
+      "images": [
+        {
+          "src": "img/img_0138.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -101,9 +117,13 @@
       "categoryLabel": "Decorativas",
       "tag": "Delicada",
       "id": 5,
-      "image": "img/vela-flor-cerejeira.jpeg",
       "description": "Inspirada na delicadeza da flor de cerejeira, esta vela transmite serenidade, elegância e renovação, perfumando e encantando qualquer ambiente.",
-      "category": "decorativas"
+      "category": "decorativas",
+      "images": [
+        {
+          "src": "img/vela-flor-cerejeira.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -126,9 +146,13 @@
       "categoryLabel": "Decorativas",
       "tag": "Premium",
       "id": 6,
-      "image": "img/vela-copo-margarida-cerejeira.jpeg",
       "description": "Delicada e encantadora, esta vela une a suavidade ao aconchego da luz, trazendo charme, leveza e um toque especial para qualquer ambiente.\n",
-      "category": "decorativas"
+      "category": "decorativas",
+      "images": [
+        {
+          "src": "img/vela-copo-margarida-cerejeira.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -151,9 +175,13 @@
       "categoryLabel": "Decorativas",
       "tag": "Moderna",
       "id": 7,
-      "image": "img/vela-bubble.jpeg",
       "description": "Com seu design moderno e elegante, a Vela Bubble é perfeita para decorar e transformar qualquer ambiente, unindo beleza, aconchego e sofisticação em cada detalhe.",
-      "category": "decorativas"
+      "category": "decorativas",
+      "images": [
+        {
+          "src": "img/vela-bubble.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -176,9 +204,13 @@
       "categoryLabel": "Velas Santas",
       "tag": "Tamanho Mini",
       "id": 8,
-      "image": "img/vela-nossa-senhora-mini.jpeg",
       "description": "Versão mini da nossa vela de Nossa Senhora — menor que a Vela Nossa Senhora Aparecida tradicional, ideal para um altar pequeno, para levar consigo ou presentear com delicadeza. Feita à mão, com todo o carinho de sempre em um tamanho compacto.",
-      "category": "velas-santas"
+      "category": "velas-santas",
+      "images": [
+        {
+          "src": "img/vela-nossa-senhora-mini.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -201,9 +233,13 @@
       "categoryLabel": "Velas santas",
       "tag": "Devoção ",
       "id": 9,
-      "image": "img/50f809e5-065d-478f-8530-f52153286e2b.jpeg",
       "description": "Um símbolo de proteção, bênçãos e fé, criado para iluminar momentos especiais e eternizar lembranças cheias de amor e devoção.",
-      "category": "velas-santas"
+      "category": "velas-santas",
+      "images": [
+        {
+          "src": "img/50f809e5-065d-478f-8530-f52153286e2b.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -226,9 +262,13 @@
       "categoryLabel": "Velas santas",
       "tag": "Devoção ",
       "id": 10,
-      "image": "img/3275775a-a93e-4a62-9b03-7a59ebbaec86.jpeg",
       "description": "Um pequeno anjo para iluminar, proteger e tornar cada momento ainda mais especial.",
-      "category": "velas-santas"
+      "category": "velas-santas",
+      "images": [
+        {
+          "src": "img/3275775a-a93e-4a62-9b03-7a59ebbaec86.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -251,9 +291,13 @@
       "categoryLabel": "Velas Santas",
       "tag": "Devoção ",
       "id": 11,
-      "image": "img/83eddd24-d364-4f09-abdd-01507692d2f7.jpeg",
       "description": "A delicadeza de um anjo transformada em vela para iluminar ambientes e aquecer corações.\n",
-      "category": "velas-santas"
+      "category": "velas-santas",
+      "images": [
+        {
+          "src": "img/83eddd24-d364-4f09-abdd-01507692d2f7.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -276,9 +320,13 @@
       "categoryLabel": "Vela decorativa ",
       "tag": "Delicada",
       "id": 12,
-      "image": "img/02dd4757-9dd1-4365-91ff-6a0b58f10081.jpeg",
       "description": "Cada chama acesa é um convite para viver momentos de paz, aconchego e serenidade.\n",
-      "category": "decorativas"
+      "category": "decorativas",
+      "images": [
+        {
+          "src": "img/02dd4757-9dd1-4365-91ff-6a0b58f10081.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -301,9 +349,13 @@
       "categoryLabel": "Decorativa ",
       "tag": "Premium ",
       "id": 13,
-      "image": "img/23dcea92-fc96-4dec-a6f9-6c85199b213f.jpeg",
       "description": "Cada chama acesa é um convite para viver momentos de paz, aconchego e serenidade.\n",
-      "category": "decorativas"
+      "category": "decorativas",
+      "images": [
+        {
+          "src": "img/23dcea92-fc96-4dec-a6f9-6c85199b213f.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -326,9 +378,13 @@
       "categoryLabel": "Decorativas",
       "tag": "Premium ",
       "id": 14,
-      "image": "img/718fda91-2918-434a-950c-d4377ac7297c.jpeg",
       "description": "Com a delicadeza da flor de cerejeira, esta vela perfuma e ilumina o ambiente, trazendo leveza, serenidade e um toque de elegância para o seu dia.",
-      "category": "decorativas"
+      "category": "decorativas",
+      "images": [
+        {
+          "src": "img/718fda91-2918-434a-950c-d4377ac7297c.jpeg"
+        }
+      ]
     },
     {
       "aromas": [
@@ -351,9 +407,13 @@
       "categoryLabel": "Velas Santas",
       "tag": "Novidade",
       "id": 15,
-      "image": "img/img_0086.jpeg",
       "description": "Sob a proteção de Nossa Senhora de Guadalupe, ela simboliza amor, acolhimento e esperança, tornando qualquer ocasião ainda mais especial.",
-      "category": "velas-santas"
+      "category": "velas-santas",
+      "images": [
+        {
+          "src": "img/img_0086.jpeg"
+        }
+      ]
     }
   ]
 }
