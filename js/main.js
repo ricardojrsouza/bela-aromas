@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Bela Aromas — Lógica principal (carrinho, filtros, favoritos)
+   Bela Aromas — Lógica principal (carrinho, filtros, favoritos, checkout)
    ========================================================================== */
 
 const STORAGE_KEY = "belaAromasCart";
@@ -7,12 +7,34 @@ const WHATSAPP_NUMBER = "5537998332591"; // WhatsApp da Bela Aromas (com DDI 55 
 
 /* ---------- Configuração de pagamento ---------- */
 const CASH_ALLOWED_CITY = "maravilhas"; // cidade onde dinheiro é aceito (comparação sem acento/maiúsculas)
-const CARD_MIN_VALUE = 50; // valor mínimo do pedido para liberar cartão (regra aplicada no servidor também)
+
+/* ---------- Helpers de produto ---------- */
+function getProductImage(p) {
+  if (p.images && p.images.length > 0) return p.images[0].src || p.images[0];
+  return p.image || "https://placehold.co/600x600/F5EBDD/B96F55?text=Bela+Aromas";
+}
+
+function getProductImages(p) {
+  if (p.images && p.images.length > 0) return p.images.map(im => im.src || im);
+  if (p.image) return [p.image];
+  return ["https://placehold.co/600x600/F5EBDD/B96F55?text=Bela+Aromas"];
+}
 
 /* ---------- Estado do carrinho (em memória + localStorage) ---------- */
+function cartItemKey(id, color, aroma) {
+  return `${id}::${color || ""}::${aroma || ""}`;
+}
+
 function getCart() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    return raw.map(item => ({
+      key: item.key || cartItemKey(item.id, item.color, item.aroma),
+      id: item.id,
+      qty: item.qty,
+      color: item.color || "",
+      aroma: item.aroma || ""
+    }));
   } catch {
     return [];
   }
@@ -23,37 +45,38 @@ function saveCart(cart) {
   updateCartCount();
 }
 
-function addToCart(productId) {
+function addToCart(productId, color, aroma) {
   const product = PRODUCTS.find(p => p.id === productId);
   if (!product) return;
 
+  const key = cartItemKey(productId, color, aroma);
   const cart = getCart();
-  const existing = cart.find(item => item.id === productId);
+  const existing = cart.find(item => item.key === key);
 
   if (existing) {
     existing.qty += 1;
   } else {
-    cart.push({ id: product.id, qty: 1 });
+    cart.push({ key, id: product.id, qty: 1, color: color || "", aroma: aroma || "" });
   }
 
   saveCart(cart);
   renderCartDrawer();
 }
 
-function updateQty(productId, delta) {
+function updateQty(key, delta) {
   const cart = getCart();
-  const item = cart.find(i => i.id === productId);
+  const item = cart.find(i => i.key === key);
   if (!item) return;
 
   item.qty += delta;
-  const newCart = item.qty <= 0 ? cart.filter(i => i.id !== productId) : cart;
+  const newCart = item.qty <= 0 ? cart.filter(i => i.key !== key) : cart;
 
   saveCart(newCart);
   renderCartDrawer();
 }
 
-function removeFromCart(productId) {
-  const cart = getCart().filter(i => i.id !== productId);
+function removeFromCart(key) {
+  const cart = getCart().filter(i => i.key !== key);
   saveCart(cart);
   renderCartDrawer();
 }
@@ -92,18 +115,23 @@ function renderCartDrawer() {
     itemsEl.innerHTML = cart.map(item => {
       const p = PRODUCTS.find(pr => pr.id === item.id);
       if (!p) return "";
+      const variantParts = [item.color, item.aroma].filter(Boolean);
+      const variantHtml = variantParts.length
+        ? `<span class="cart-item-variant">${variantParts.join(" · ")}</span>`
+        : "";
       return `
         <div class="cart-item">
-          <img src="${p.image}" alt="${p.name}">
+          <img src="${getProductImage(p)}" alt="${p.name}">
           <div class="cart-item-info">
             <h4>${p.name}</h4>
+            ${variantHtml}
             <span>${formatPrice(p.price)}</span>
             <div class="qty-control">
-              <button onclick="updateQty(${p.id}, -1)" aria-label="Diminuir quantidade">−</button>
+              <button onclick="updateQty('${item.key}', -1)" aria-label="Diminuir quantidade">−</button>
               <span>${item.qty}</span>
-              <button onclick="updateQty(${p.id}, 1)" aria-label="Aumentar quantidade">+</button>
+              <button onclick="updateQty('${item.key}', 1)" aria-label="Aumentar quantidade">+</button>
             </div>
-            <button class="remove-item" onclick="removeFromCart(${p.id})">Remover</button>
+            <button class="remove-item" onclick="removeFromCart('${item.key}')">Remover</button>
           </div>
         </div>
       `;
@@ -152,7 +180,7 @@ function setupCityPaymentRule() {
   });
 }
 
-/* ---------- Checkout via WhatsApp ---------- */
+/* ---------- Checkout via WhatsApp / Mercado Pago ---------- */
 function openCheckout() {
   const cart = getCart();
   if (cart.length === 0) {
@@ -192,8 +220,10 @@ function renderCheckoutSummary() {
   summaryEl.innerHTML = cart.map(item => {
     const p = PRODUCTS.find(pr => pr.id === item.id);
     if (!p) return "";
+    const variantParts = [item.color, item.aroma].filter(Boolean);
+    const variantText = variantParts.length ? ` (${variantParts.join(", ")})` : "";
     return `<div class="checkout-summary-item">
-      <span>${item.qty}x ${p.name}</span>
+      <span>${item.qty}x ${p.name}${variantText}</span>
       <span>${formatPrice(p.price * item.qty)}</span>
     </div>`;
   }).join("");
@@ -339,6 +369,24 @@ function toggleWishlist(productId, btn) {
   localStorage.setItem(WISHLIST_KEY, JSON.stringify(list));
 }
 
+/* ---------- Carrossel de fotos do produto ---------- */
+function carouselNav(btn, direction) {
+  const media = btn.closest(".product-media");
+  if (!media) return;
+
+  const slides = Array.from(media.querySelectorAll(".carousel-slide"));
+  const dots = Array.from(media.querySelectorAll(".dot"));
+  if (slides.length <= 1) return;
+
+  let currentIndex = slides.findIndex(s => s.classList.contains("active"));
+  slides[currentIndex].classList.remove("active");
+  if (dots[currentIndex]) dots[currentIndex].classList.remove("active");
+
+  let newIndex = (currentIndex + direction + slides.length) % slides.length;
+  slides[newIndex].classList.add("active");
+  if (dots[newIndex]) dots[newIndex].classList.add("active");
+}
+
 /* ---------- Renderização de produtos (usado na página de produtos) ---------- */
 
 function renderProducts(filter = "todas") {
@@ -355,9 +403,44 @@ function renderProducts(filter = "todas") {
     return;
   }
 
-  grid.innerHTML = filtered.map(p => `
+  grid.innerHTML = filtered.map(p => {
+    const hasColors = Array.isArray(p.colors) && p.colors.length > 0;
+    const hasAromas = Array.isArray(p.aromas) && p.aromas.length > 0;
+    const images = getProductImages(p);
+
+    const colorSelect = hasColors ? `
+      <div class="variant-select">
+        <label for="color-${p.id}">Cor</label>
+        <select id="color-${p.id}">
+          ${p.colors.map(c => `<option value="${c}">${c}</option>`).join("")}
+        </select>
+      </div>` : "";
+
+    const aromaSelect = hasAromas ? `
+      <div class="variant-select">
+        <label for="aroma-${p.id}">Aroma</label>
+        <select id="aroma-${p.id}">
+          ${p.aromas.map(a => `<option value="${a}">${a}</option>`).join("")}
+        </select>
+      </div>` : "";
+
+    const slidesHtml = images.map((img, i) => `
+      <img src="${img}" alt="${p.name}" loading="lazy" class="carousel-slide ${i === 0 ? 'active' : ''}"
+           onerror="this.onerror=null; this.src='https://placehold.co/600x600/F5EBDD/B96F55?text=Bela+Aromas';">
+    `).join("");
+
+    const carouselControls = images.length > 1 ? `
+      <button type="button" class="carousel-arrow prev" onclick="carouselNav(this, -1)" aria-label="Foto anterior">‹</button>
+      <button type="button" class="carousel-arrow next" onclick="carouselNav(this, 1)" aria-label="Próxima foto">›</button>
+      <div class="carousel-dots">
+        ${images.map((_, i) => `<span class="dot ${i === 0 ? 'active' : ''}"></span>`).join("")}
+      </div>
+    ` : "";
+
+    return `
     <article class="product-card">
       <div class="product-media">
+        ${slidesHtml}
         <span class="product-tag">${p.tag}</span>
         <button class="wishlist-btn ${wishlist.includes(p.id) ? 'active' : ''}"
                 onclick="toggleWishlist(${p.id}, this)" aria-label="Favoritar">
@@ -365,13 +448,14 @@ function renderProducts(filter = "todas") {
             <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/>
           </svg>
         </button>
-        <img src="${p.image}" alt="${p.name}" loading="lazy"
-             onerror="this.onerror=null; this.src='https://placehold.co/600x600/F5EBDD/B96F55?text=Bela+Aromas';">
+        ${carouselControls}
       </div>
       <div class="product-info">
         <span class="product-category">${p.categoryLabel}</span>
         <h3>${p.name}</h3>
         <p>${p.description}</p>
+        ${colorSelect}
+        ${aromaSelect}
         <div class="product-footer">
           <span class="product-price">${formatPrice(p.price)}</span>
           <button class="add-btn" onclick="handleAddClick(${p.id}, this)">
@@ -380,11 +464,18 @@ function renderProducts(filter = "todas") {
         </div>
       </div>
     </article>
-  `).join("");
+  `;
+  }).join("");
 }
 
 function handleAddClick(productId, btn) {
-  addToCart(productId);
+  const colorSelect = document.getElementById(`color-${productId}`);
+  const aromaSelect = document.getElementById(`aroma-${productId}`);
+  const color = colorSelect ? colorSelect.value : "";
+  const aroma = aromaSelect ? aromaSelect.value : "";
+
+  addToCart(productId, color, aroma);
+
   const original = btn.textContent;
   btn.textContent = "Adicionado ✓";
   btn.classList.add("added");
@@ -406,22 +497,6 @@ function setupFilters() {
   });
 }
 
-/* ---------- Newsletter (simulado) ---------- */
-function setupNewsletter() {
-  const form = document.getElementById("newsletter-form");
-  if (!form) return;
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const msg = document.getElementById("newsletter-msg");
-    const input = form.querySelector("input[type='email']");
-    if (input.value.trim()) {
-      msg.textContent = "Obrigado! Confira seu e-mail para o cupom de 10% OFF. 💌";
-      form.reset();
-    }
-  });
-}
-
 /* ---------- Menu mobile ---------- */
 function setupMobileMenu() {
   const toggle = document.getElementById("menu-toggle");
@@ -439,7 +514,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   updateCartCount();
   renderCartDrawer();
-  setupNewsletter();
   setupMobileMenu();
   setupCheckoutForm();
   setupCityPaymentRule();
