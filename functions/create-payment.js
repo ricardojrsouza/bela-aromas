@@ -30,13 +30,6 @@ export async function onRequestPost(context) {
       external_reference: `bela-aromas-${Date.now()}`
     };
 
-    // Regra: cartão só liberado para pedidos a partir de R$ 50
-    if (Number(total) < 50) {
-      preference.payment_methods = {
-        excluded_payment_types: [{ id: "credit_card" }]
-      };
-    }
-
     const mpRes = await fetch("https://api.mercadopago.com/checkout/preferences", {
       method: "POST",
       headers: {
