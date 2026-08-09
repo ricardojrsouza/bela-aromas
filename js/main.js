@@ -329,9 +329,8 @@ function setupCheckoutForm() {
         throw new Error(data.error || "Não foi possível iniciar o pagamento.");
       }
 
-      // Como estamos usando credenciais de TESTE, usamos o link de sandbox.
-      // Quando trocar para credenciais de produção, usar data.initPoint no lugar.
-      const checkoutUrl = data.sandboxInitPoint || data.initPoint;
+      // Credenciais de PRODUÇÃO: usamos o link real de pagamento.
+      const checkoutUrl = data.initPoint;
       window.location.href = checkoutUrl;
 
     } catch (err) {
