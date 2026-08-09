@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedido Confirmado — Bela Aromas</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .result-section {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px;
+      text-align: center;
+    }
+    .result-card {
+      max-width: 480px;
+    }
+    .result-icon { font-size: 3.5rem; margin-bottom: 20px; }
+    .result-card h1 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      margin-bottom: 14px;
+    }
+    .result-card p {
+      color: var(--brown-700);
+      margin-bottom: 28px;
+    }
+    .result-summary {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-align: left;
+      margin-bottom: 28px;
+    }
+    .result-summary-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      color: var(--brown-700);
+      padding: 6px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="nav">
+      <a href="index.html" class="logo"><span class="logo-badge">Bela<br>Aromas</span></a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="produtos.html">Produtos</a></li>
+        <li><a href="sobre.html">Sobre Nós</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="result-section">
+    <div class="result-card">
+      <div class="result-icon">🕯️✅</div>
+      <h1>Pagamento confirmado!</h1>
+      <p>Seu pedido foi recebido e o pagamento já foi aprovado pelo Mercado Pago. Toque no botão abaixo para avisar a Bela Aromas pelo WhatsApp e combinar a entrega.</p>
+
+      <div class="result-summary" id="result-summary"></div>
+
+      <button class="btn btn-primary" id="whatsapp-btn" style="width:100%; justify-content:center;">Avisar no WhatsApp</button>
+    </div>
+  </section>
+
+  <script src="js/products-loader.js"></script>
+  <script>
+    const WHATSAPP_NUMBER = "5537998332591";
+    const STORAGE_KEY = "belaAromasCart";
+
+    function formatPrice(value) {
+      return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    }
+
+    function getCart() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    async function init() {
+      await loadProducts();
+
+      const cart = getCart();
+      const summaryEl = document.getElementById("result-summary");
+      const params = new URLSearchParams(window.location.search);
+      const paymentId = params.get("payment_id") || "";
+
+      if (cart.length === 0) {
+        summaryEl.innerHTML = "<p>Não encontramos os detalhes do pedido aqui, mas seu pagamento foi aprovado. Fale com a gente pelo WhatsApp para confirmar.</p>";
+      } else {
+        let total = 0;
+        summaryEl.innerHTML = cart.map(item => {
+          const p = PRODUCTS.find(pr => pr.id === item.id);
+          if (!p) return "";
+          total += p.price * item.qty;
+          const variantParts = [item.color, item.aroma].filter(Boolean);
+          const variantText = variantParts.length ? ` (${variantParts.join(", ")})` : "";
+          return `<div class="result-summary-item"><span>${item.qty}x ${p.name}${variantText}</span><span>${formatPrice(p.price * item.qty)}</span></div>`;
+        }).join("") + `<div class="result-summary-item" style="border-top:1px solid var(--border-soft); margin-top:8px; padding-top:10px; font-weight:700;"><span>Total pago</span><span>${formatPrice(total)}</span></div>`;
+      }
+
+      document.getElementById("whatsapp-btn").addEventListener("click", () => {
+        let msg = `Olá! Acabei de finalizar e *pagar* um pedido na Bela Aromas pelo site 🕯️✅\n\n`;
+
+        cart.forEach(item => {
+          const p = PRODUCTS.find(pr => pr.id === item.id);
+          if (!p) return;
+          const variantParts = [item.color, item.aroma].filter(Boolean);
+          const variantText = variantParts.length ? ` (${variantParts.join(", ")})` : "";
+          msg += `• ${item.qty}x ${p.name}${variantText}\n`;
+        });
+
+        if (paymentId) {
+          msg += `\n*Código do pagamento:* ${paymentId}`;
+        }
+        msg += `\n\nPode confirmar meu pedido? 😊`;
+
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+        window.open(url, "_blank");
+
+        localStorage.removeItem(STORAGE_KEY);
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>
