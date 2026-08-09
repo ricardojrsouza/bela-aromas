@@ -6,16 +6,6 @@
   <title>Bela Aromas — Velas Artesanais com Fé e Amor</title>
   <meta name="description" content="Velas artesanais únicas para sua devoção, seu lar e quem você ama. Cera natural, feitas à mão.">
   <link rel="stylesheet" href="css/style.css">
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => { document.location.href = "/admin/"; });
-        }
-      });
-    }
-  </script>
 </head>
 <body>
 
@@ -176,42 +166,27 @@
         <div class="payment-options">
           <label class="payment-option" id="payment-cash-label">
             <input type="radio" name="payment" value="Dinheiro" id="payment-cash" disabled>
-            <span>💵 Dinheiro</span>
+            <span>💵 Dinheiro (retirada)</span>
           </label>
           <label class="payment-option">
-            <input type="radio" name="payment" value="Pix" id="payment-pix" checked>
-            <span>📱 Pix</span>
+            <input type="radio" name="payment" value="Online" id="payment-online" checked>
+            <span>💳 Pagar Online</span>
           </label>
         </div>
         <p class="cash-hint" id="cash-city-hint">Pagamento em dinheiro disponível apenas para entregas em Maravilhas/MG. Informe a cidade acima para liberar essa opção.</p>
-
-        <div class="pix-block" id="pix-block">
-          <p class="pix-title">Pague com Pix — escaneie ou copie o código</p>
-          <div class="pix-qrcode-wrap">
-            <div id="pix-qrcode"></div>
-          </div>
-          <div class="pix-copy-row">
-            <input type="text" id="pix-code" readonly>
-            <button type="button" class="btn btn-outline btn-sm" onclick="copyPixCode()">Copiar</button>
-          </div>
-          <p class="pix-copy-feedback" id="pix-copy-feedback"></p>
-          <p class="pix-receipt-note">📎 Depois de pagar, <strong>envie o comprovante aqui pelo WhatsApp</strong> junto com o seu pedido — isso agiliza a confirmação!</p>
-          <label class="pix-confirm-label">
-            <input type="checkbox" id="pix-confirm">
-            <span>Já fiz o pagamento e vou enviar o comprovante pelo WhatsApp</span>
-          </label>
-        </div>
+        <p class="online-hint" id="online-hint">Você será levado(a) para a página segura do Mercado Pago, onde pode escolher Pix ou Cartão. Cartão disponível para pedidos a partir de R$ 50,00.</p>
 
         <label class="field-label" for="checkout-notes">Observações (opcional)</label>
         <textarea id="checkout-notes" placeholder="Complemento do endereço, cor da vela, horário..."></textarea>
 
-        <button type="submit" class="btn btn-primary" id="checkout-submit-btn">Enviar pedido no WhatsApp</button>
+        <div id="checkout-error" style="color:#B54B3F; font-size:0.85rem; display:none; margin-bottom:8px;"></div>
+
+        <button type="submit" class="btn btn-primary" id="checkout-submit-btn">Continuar</button>
         <p class="checkout-hint">Você será direcionado ao WhatsApp da Bela Aromas para confirmar seu pedido.</p>
       </form>
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="js/products-loader.js"></script>
   <script src="js/main.js"></script>
 </body>
