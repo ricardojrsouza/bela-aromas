@@ -6,7 +6,10 @@ const STORAGE_KEY = "belaAromasCart";
 const WHATSAPP_NUMBER = "5537998332591"; // WhatsApp da Bela Aromas (com DDI 55 + DDD 37)
 
 /* ---------- Configuração de pagamento ---------- */
-const CASH_ALLOWED_CITY = "maravilhas"; // cidade onde dinheiro é aceito (comparação sem acento/maiúsculas)
+const PIX_KEY = "9bdfa4c9-d365-450e-95ee-0e232495b7cc";
+const PIX_MERCHANT_NAME = "LUIZ PEGO DA CRUZ"; // sem acentos, máx. 25 caracteres (regra do Pix)
+const PIX_MERCHANT_CITY = "MARAVILHAS";        // sem acentos, máx. 15 caracteres (regra do Pix)
+const CASH_ALLOWED_CITY = "maravilhas";        // cidade onde dinheiro é aceito (comparação sem acento/maiúsculas)
 
 /* ---------- Helpers de produto ---------- */
 function getProductImage(p) {
@@ -154,11 +157,91 @@ function toggleCart(forceState) {
   if (shouldOpen) renderCartDrawer();
 }
 
-/* ---------- Regra: dinheiro só para a cidade da loja ---------- */
+/* ---------- Geração do Pix (padrão BR Code / EMV do Banco Central) ---------- */
 function removeAccents(str) {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
+function crc16(payload) {
+  let crc = 0xFFFF;
+  for (let i = 0; i < payload.length; i++) {
+    crc ^= payload.charCodeAt(i) << 8;
+    for (let j = 0; j < 8; j++) {
+      crc = (crc & 0x8000) ? ((crc << 1) ^ 0x1021) & 0xFFFF : (crc << 1) & 0xFFFF;
+    }
+  }
+  return crc.toString(16).toUpperCase().padStart(4, "0");
+}
+
+function emvField(id, value) {
+  const len = String(value.length).padStart(2, "0");
+  return `${id}${len}${value}`;
+}
+
+function buildPixPayload(amount) {
+  const merchantAccountInfo = emvField("26",
+    emvField("00", "br.gov.bcb.pix") + emvField("01", PIX_KEY)
+  );
+  const additionalData = emvField("62", emvField("05", "***"));
+
+  let payload = "";
+  payload += emvField("00", "01");
+  payload += emvField("01", "12");
+  payload += merchantAccountInfo;
+  payload += emvField("52", "0000");
+  payload += emvField("53", "986");
+  payload += emvField("54", amount.toFixed(2));
+  payload += emvField("58", "BR");
+  payload += emvField("59", PIX_MERCHANT_NAME.slice(0, 25));
+  payload += emvField("60", PIX_MERCHANT_CITY.slice(0, 15));
+  payload += additionalData;
+  payload += "6304";
+  payload += crc16(payload);
+
+  return payload;
+}
+
+function renderPixBlock() {
+  const container = document.getElementById("pix-block");
+  const codeInput = document.getElementById("pix-code");
+  if (!container || !codeInput) return;
+
+  const payload = buildPixPayload(cartTotalPrice());
+  codeInput.value = payload;
+
+  const qrEl = document.getElementById("pix-qrcode");
+  if (qrEl && window.QRCode) {
+    qrEl.innerHTML = "";
+    new QRCode(qrEl, {
+      text: payload,
+      width: 180,
+      height: 180,
+      colorDark: "#2E2117",
+      colorLight: "#FBF4EA"
+    });
+  }
+}
+
+function copyPixCode() {
+  const codeInput = document.getElementById("pix-code");
+  const feedback = document.getElementById("pix-copy-feedback");
+  if (!codeInput) return;
+
+  codeInput.select();
+  codeInput.setSelectionRange(0, 99999);
+
+  navigator.clipboard.writeText(codeInput.value).then(() => {
+    if (feedback) {
+      feedback.textContent = "Código copiado! Cole no app do seu banco. ✅";
+      setTimeout(() => { feedback.textContent = ""; }, 3500);
+    }
+  }).catch(() => {
+    document.execCommand("copy");
+    if (feedback) feedback.textContent = "Código copiado!";
+  });
+}
+
+/* ---------- Regra: dinheiro só para a cidade da loja ---------- */
 function setupCityPaymentRule() {
   const cityInput = document.getElementById("checkout-city");
   const cashOption = document.getElementById("payment-cash");
@@ -175,12 +258,54 @@ function setupCityPaymentRule() {
     cashHint.style.display = isLocal ? "none" : "block";
 
     if (!isLocal && cashOption.checked) {
-      document.getElementById("payment-online").checked = true;
+      document.getElementById("payment-pix").checked = true;
+      renderPixBlock();
+      document.getElementById("pix-block").style.display = "block";
     }
   });
 }
 
-/* ---------- Checkout via WhatsApp / Mercado Pago ---------- */
+/* ---------- Trava do botão de envio conforme confirmação de pagamento Pix ---------- */
+function updatePixSubmitState() {
+  const selected = document.querySelector("input[name='payment']:checked");
+  const pixConfirm = document.getElementById("pix-confirm");
+  const submitBtn = document.getElementById("checkout-submit-btn");
+  if (!submitBtn || !selected) return;
+
+  if (selected.value === "Pix") {
+    submitBtn.disabled = !(pixConfirm && pixConfirm.checked);
+  } else {
+    submitBtn.disabled = false;
+  }
+}
+
+/* ---------- Alternância visual do bloco Pix + trava do botão de envio ---------- */
+function setupPaymentToggle() {
+  const radios = document.querySelectorAll("input[name='payment']");
+  const pixBlock = document.getElementById("pix-block");
+  const pixConfirm = document.getElementById("pix-confirm");
+  if (!radios.length || !pixBlock) return;
+
+  radios.forEach(radio => {
+    radio.addEventListener("change", () => {
+      if (radio.value === "Pix" && radio.checked) {
+        pixBlock.style.display = "block";
+        renderPixBlock();
+      } else {
+        pixBlock.style.display = "none";
+      }
+      updatePixSubmitState();
+    });
+  });
+
+  if (pixConfirm) {
+    pixConfirm.addEventListener("change", updatePixSubmitState);
+  }
+
+  updatePixSubmitState();
+}
+
+/* ---------- Checkout via WhatsApp ---------- */
 function openCheckout() {
   const cart = getCart();
   if (cart.length === 0) {
@@ -198,8 +323,11 @@ function openCheckout() {
     modal.classList.add("open");
   }
 
-  const errorEl = document.getElementById("checkout-error");
-  if (errorEl) { errorEl.style.display = "none"; errorEl.textContent = ""; }
+  renderPixBlock();
+
+  const pixConfirm = document.getElementById("pix-confirm");
+  if (pixConfirm) pixConfirm.checked = false;
+  updatePixSubmitState();
 }
 
 function closeCheckout() {
@@ -246,6 +374,10 @@ function buildOrderMessage(customerName, payment, address, notes) {
   msg += `\n*Total: ${formatPrice(cartTotalPrice())}*`;
   msg += `\n*Forma de pagamento:* ${payment}`;
 
+  if (payment === "Pix") {
+    msg += `\n📎 _Vou enviar o comprovante do Pix aqui em seguida._`;
+  }
+
   if (address && address.trim()) {
     msg += `\n*Endereço:* ${address.trim()}`;
   }
@@ -261,14 +393,12 @@ function setupCheckoutForm() {
   const form = document.getElementById("checkout-form");
   if (!form) return;
 
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const name = document.getElementById("checkout-name").value.trim();
     const paymentInput = form.querySelector("input[name='payment']:checked");
     const notes = document.getElementById("checkout-notes").value;
-    const submitBtn = document.getElementById("checkout-submit-btn");
-    const errorEl = document.getElementById("checkout-error");
 
     const rua = document.getElementById("checkout-street").value.trim();
     const numero = document.getElementById("checkout-number").value.trim();
@@ -277,71 +407,29 @@ function setupCheckoutForm() {
 
     if (!name || !paymentInput) return;
 
+    const pixConfirm = document.getElementById("pix-confirm");
+    if (paymentInput.value === "Pix" && !(pixConfirm && pixConfirm.checked)) {
+      pixConfirm.closest(".pix-block").scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
     let address = "";
     if (rua || numero || bairro || cidade) {
       address = `${rua}${numero ? ", " + numero : ""}${bairro ? " — " + bairro : ""}${cidade ? ", " + cidade : ""}`.trim();
     }
 
     const payment = paymentInput.value;
+    const message = buildOrderMessage(name, payment, address, notes);
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-    /* ---------- Dinheiro na retirada: continua indo direto pro WhatsApp ---------- */
-    if (payment === "Dinheiro") {
-      const message = buildOrderMessage(name, "Dinheiro (retirada)", address, notes);
-      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-      window.open(url, "_blank");
+    window.open(url, "_blank");
 
-      saveCart([]);
-      renderCartDrawer();
-      closeCheckout();
-      form.reset();
-      return;
-    }
-
-    /* ---------- Pagar Online: cria o pagamento no Mercado Pago e redireciona ---------- */
-    const cart = getCart();
-    const total = cartTotalPrice();
-
-    const items = cart.map(item => {
-      const p = PRODUCTS.find(pr => pr.id === item.id);
-      const variantParts = [item.color, item.aroma].filter(Boolean);
-      const variantText = variantParts.length ? ` (${variantParts.join(", ")})` : "";
-      return {
-        title: `${p.name}${variantText}`,
-        quantity: item.qty,
-        unitPrice: p.price
-      };
-    });
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Preparando pagamento...";
-    if (errorEl) errorEl.style.display = "none";
-
-    try {
-      const res = await fetch("/create-payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ items, payerName: name, total })
-      });
-
-      const data = await res.json();
-
-      if (!res.ok || data.error) {
-        throw new Error(data.error || "Não foi possível iniciar o pagamento.");
-      }
-
-      // Credenciais de PRODUÇÃO: usamos o link real de pagamento.
-      const checkoutUrl = data.initPoint;
-      window.location.href = checkoutUrl;
-
-    } catch (err) {
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Continuar";
-      if (errorEl) {
-        errorEl.textContent = "Ops, não conseguimos iniciar o pagamento agora. Tenta de novo em instantes.";
-        errorEl.style.display = "block";
-      }
-      console.error(err);
-    }
+    saveCart([]);
+    renderCartDrawer();
+    closeCheckout();
+    form.reset();
+    document.getElementById("pix-block").style.display = "block";
+    updatePixSubmitState();
   });
 }
 
@@ -516,6 +604,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupMobileMenu();
   setupCheckoutForm();
   setupCityPaymentRule();
+  setupPaymentToggle();
 
   const checkoutClose = document.getElementById("checkout-close");
   const checkoutOverlay = document.getElementById("checkout-overlay");
